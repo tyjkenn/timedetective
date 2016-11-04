@@ -1,11 +1,14 @@
 import pygame, sys
 import graphics
 import events
+import pytmx
 
 graphics.init(400, 400)
+graphics.set_map("maps/outside.tmx");
 
 def update():
     events.update()
+    graphics.update()
 
 run = True
 clock = pygame.time.Clock()

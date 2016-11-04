@@ -1,24 +1,26 @@
 import pygame
+import pytmx
+import map
 
 images = {}
 
 _width = None
 _height = None
 _screen = None
+_mapRenderer = None
 
 _entities = []
-_map = None
 
 def register(entity):
     global _entities
     if entity not in _entities:
         _entities.append(entity)
 
-def set_map(theMap):
-    global _map
-    _map = theMap
+def set_map(filename):
+    global _mapRenderer
+    _mapRenderer = map.Renderer(filename)
 
-def init(width, height, title = 'Minotaur Game'):
+def init(width, height, title = 'Time Detective'):
     global _width, _height, _screen
     _width = width
     _height = height
@@ -27,17 +29,8 @@ def init(width, height, title = 'Minotaur Game'):
     pygame.display.set_caption(title)
 
 def draw_map():
-    global _screen, _map
-    print _map
-    for x in xrange(_map.width):
-        for y in xrange(_map.height):
-            tile = _map[x, y]
-            tilex = tile % 30
-            tiley = tile / 30
-            _screen.blit(
-                    _map.tileset.subsurface((tilex * 16, tiley * 16, 16, 16)),
-                    (x * 16, y * 16)
-            )
+    global _screen
+    _mapRenderer.render(_screen)
 
 def update():
     global _screen, _entities
