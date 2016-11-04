@@ -4,14 +4,14 @@ import events
 import pytmx
 import botManager
 
+pygame.init()
 graphics.init(400, 400)
 graphics.set_map("maps/outside.tmx");
-botM = botManager.BotManager()
 
 def update():
     events.update()
     graphics.update()
-    botM.update()
+    botManager.update()
 
 run = True
 clock = pygame.time.Clock()
