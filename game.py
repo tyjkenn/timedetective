@@ -2,13 +2,16 @@ import pygame, sys
 import graphics
 import events
 import pytmx
+import botManager
 
 graphics.init(400, 400)
 graphics.set_map("maps/outside.tmx");
+botM = botManager.BotManager()
 
 def update():
     events.update()
     graphics.update()
+    botM.update()
 
 run = True
 clock = pygame.time.Clock()
@@ -20,7 +23,7 @@ while True:
         elif e.type == pygame.KEYUP:
             if e.key == pygame.K_F4 and e.mod == pygame.KMOD_ALT:
                 run = False
-    clock.tick(20)
+    clock.tick(60)
     if not run:
         pygame.quit()
         break
