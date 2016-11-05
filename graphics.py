@@ -42,15 +42,15 @@ def draw_ui():
 
 def update():
     global _screen, _entities
-    _screen.fill((0,0,0))
+    _screen.fill((100,100,255))
     draw_map()
     for entity in _entities:
         _screen.blit(pygame.transform.flip(
                             entity.sprite_sheet.subsurface(
                                 entity.FRAMES[10 * entity.action + int(entity.frame)]
-                            ), entity.facing, False
+                            ), entity.facingRight, False
                         ),
-                        (entity.x, entity.y))
+                        (entity.x + map.xOffset, entity.y + map.yOffset))
     draw_ui()
     pygame.display.flip();
 

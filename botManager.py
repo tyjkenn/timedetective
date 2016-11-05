@@ -20,7 +20,7 @@ def tickClock():
         minute += 1
     if minute >= 60:
         minute = 0
-        hours += 1
+        hour += 1
 
 def update():
     global bots
