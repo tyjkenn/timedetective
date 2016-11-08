@@ -1,0 +1,2 @@
+@NPC This is a test of the NPC dialog
+@PLAYER This is a test of the PLAYER responses
