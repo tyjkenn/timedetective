@@ -5,8 +5,39 @@ from pytmx import util_pygame
 
 xOffset = 0
 yOffset = 0
+groundPoints = []
+leftTileCount = 0
+rightTileCount = 0
 
 class Renderer(object):
+    def findGround(self):
+        global groundPoints, leftTileCount, rightTileCount
+        foundGround = False
+        for x in xrange(self.tmx_data.width):
+            foundInCol = False
+            for y in xrange(self.tmx_data.height):
+                gid = self.tmx_data.get_tile_gid(x, y, 3)
+                if gid == 169 or gid == 171:
+                    if groundPoints.count == 0:
+                        if gid == 169:
+                            groundPoints.append(y * self.tmx_data.tileheight + 16)
+                        else:
+                            groundPoints.append(y * self.tmx_data.tileheight)
+                    groundPoints.append(y * self.tmx_data.tileheight + 16)
+                    foundGround = True
+                    foundInCol = True
+                    break
+                if gid == 170:
+                    groundPoints.append(y * self.tmx_data.tileheight)
+                    foundGround = True
+                    foundInCol = True
+                    break
+            if not foundInCol:
+                if foundGround:
+                    rightTileCount += 1
+                else:
+                    leftTileCount += 1
+
     """
     This object renders tile maps from Tiled
     """
@@ -14,6 +45,8 @@ class Renderer(object):
         tm = util_pygame.load_pygame(filename)
         self.size = tm.width * tm.tilewidth, tm.height * tm.tileheight
         self.tmx_data = tm
+        self.findGround()
+
 
     def render(self, surface):
 
