@@ -17,7 +17,7 @@ class Renderer(object):
             foundInCol = False
             for y in xrange(self.tmx_data.height):
                 gid = self.tmx_data.get_tile_gid(x, y, 3)
-                if gid == 169 or gid == 171:
+                if gid == 167 or gid == 169:
                     if groundPoints.count == 0:
                         if gid == 169:
                             groundPoints.append(y * self.tmx_data.tileheight + 16)
@@ -27,7 +27,7 @@ class Renderer(object):
                     foundGround = True
                     foundInCol = True
                     break
-                if gid == 170:
+                if gid == 168:
                     groundPoints.append(y * self.tmx_data.tileheight)
                     foundGround = True
                     foundInCol = True
