@@ -68,12 +68,12 @@ class Player(object):
             tileY2 = map.groundPoints[tileX + 1]
             if tileX > map.leftTileCount - 2:
                 self.y = tileY1 + (tileY2 - tileY1) * percentRight  - 32
-        if (self.directions & Dir.LEFT) and not self.directions & Dir.RIGHT and tileX > map.leftTileCount - 2:
+        if (self.directions & Dir.LEFT) and not self.directions & Dir.RIGHT and tileX > -1:
             self.x -= self.walkSpeed
             self.facingRight = False
             if self.x < 130 - map.xOffset:
                 map.xOffset += self.walkSpeed
-        elif (self.directions & Dir.RIGHT) and not self.directions & Dir.LEFT and tileX < graphics._mapRenderer.tmx_data.width - map.rightTileCount - 2:
+        elif (self.directions & Dir.RIGHT) and not self.directions & Dir.LEFT and tileX < graphics._mapRenderer.tmx_data.width - map.leftTileCount - map.rightTileCount - 1:
             self.x += self.walkSpeed
             self.facingRight = True
             if self.x > graphics._width - 162 - map.xOffset:

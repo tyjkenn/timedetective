@@ -9,7 +9,7 @@ pygame.init()
 graphics.init(400, 400)
 graphics.set_map("maps/outside.tmx");
 
-thePlayer = player.Player(100, 100)
+thePlayer = player.Player(200, 100)
 graphics.register(thePlayer)
 
 paused = False
