@@ -18,9 +18,9 @@ def register(entity):
     if entity not in _entities:
         _entities.append(entity)
 
-def set_map(filename):
+def set_map(mapName):
     global _mapRenderer
-    _mapRenderer = map.Renderer(filename)
+    _mapRenderer = map.Renderer(mapName)
 
 def init(width, height, title = 'Time Detective'):
     global _width, _height, _screen, _font

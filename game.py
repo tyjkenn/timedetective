@@ -7,7 +7,7 @@ import player
 
 pygame.init()
 graphics.init(400, 400)
-graphics.set_map("maps/outside.tmx");
+graphics.set_map('outside');
 
 thePlayer = player.Player(200, 100)
 graphics.register(thePlayer)

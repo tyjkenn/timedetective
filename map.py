@@ -8,10 +8,14 @@ yOffset = 0
 groundPoints = []
 leftTileCount = 0
 rightTileCount = 0
+activeStage = 'outside'
 
 class Renderer(object):
     def findGround(self):
         global groundPoints, leftTileCount, rightTileCount
+        leftTileCount = 0
+        rightTileCount = 0
+        groundPoints = []
         foundGround = False
         layer_index = 0
         for layer in self.tmx_data.layers:
@@ -48,12 +52,12 @@ class Renderer(object):
     """
     This object renders tile maps from Tiled
     """
-    def __init__(self, filename):
-        tm = util_pygame.load_pygame(filename)
+    def __init__(self, mapName):
+        global activeStage
+        tm = util_pygame.load_pygame('maps/' + mapName + '.tmx')
         self.size = tm.width * tm.tilewidth, tm.height * tm.tileheight
         self.tmx_data = tm
         self.findGround()
-
 
     def render(self, surface):
 
