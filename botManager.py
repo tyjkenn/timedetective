@@ -7,6 +7,7 @@ bots = []
 hour = 6
 minute = 0
 frames = 0
+paused = False
 
 def createMockBot():
     global bots
@@ -16,13 +17,14 @@ def createMockBot():
 
 def tickClock():
     global hour, minute, frames
-    frames += 1
-    if frames >= 20:
-        frames = 0
-        minute += 1
-    if minute >= 60:
-        minute = 0
-        hour += 1
+    if paused == False:
+        frames += 1
+        if frames >= 20:
+            frames = 0
+            minute += 1
+        if minute >= 60:
+            minute = 0
+            hour += 1
 
 def update():
     global bots
