@@ -1,5 +1,6 @@
 import graphics
 import botManager
+from person import *
 
 class ScheduleEvent(object):
     def __init__(self, hour, minute, place):
@@ -8,9 +9,9 @@ class ScheduleEvent(object):
         self.place = place
         self.future = True
 
-class Bot(object):
+class Bot(Person):
     FRAMES = [(x*32,y*32,32,32) for y in xrange(5) for x in xrange(10)]
-    def __init__(self):
+    def __init__(self, location, x):
         self.sprite_sheet = graphics.load_image("img/characters.png")
         self.frame = 1
         self.walkSpeed = 2
@@ -20,8 +21,10 @@ class Bot(object):
         self.action = 0
         self.facingRight = False
         self.destination = None
-        self.location = "plaza"
+        self.location = location
         self.y = 10
+        self.directions = 0
+        self.x = x
 
     def addToSchedule(self,scheduleEvent):
         self.scheduleItems.append(scheduleEvent);
@@ -34,7 +37,15 @@ class Bot(object):
 
     def update(self):
         self.checkSchedule()
+        self.snapToGround()
         if self.destination:
-            print "Going to", self.destination
-            self.location = self.destination
-            self.x += self.walkSpeed
+            if self.location != 'outside':
+                if self.x > map.outX + 2:
+                    self.x -= self.walkSpeed
+                    self.facingRight = False
+                elif self.x < map.outX - 2:
+                    self.x += self.walkSpeed
+                    self.facingRight = True
+                else:
+                    self.location = 'outside'
+        self.visible = map.activeStage == self.location
