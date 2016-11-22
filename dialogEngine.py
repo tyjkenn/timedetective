@@ -2,22 +2,25 @@ import pygame
 import graphics
 import events
 
-run = True
-displayText = ""
+next = True
 responses = []
-npcDialog = []
+dialog = []
 order = ""
+length = 0
+y = 0
+fontHeight = 255 
+nextRow = 17
 
 def readText(filename, npcName):
-	global responses, npcDialog, nextFileName, order
+	global responses, dialog, nextFileName, order, length
 	with open (filename, 'r') as myfile:
 		for line in myfile:
-			if "@NPC" in line:
-				npcDialog.append(line)
-				npcDialog = ([s.replace("@NPC", npcName + ":") for s in npcDialog])
-				npcDialog = ([s.strip('\n') for s in npcDialog])
-			
-			if "@PLAYER" in line:
+			if "@DIALOG" in line:
+				dialog.append(line)
+				dialog = ([s.replace("@DIALOG","") for s in dialog])
+				dialog = ([s.strip('\n') for s in dialog])
+				length = length + 1
+			if "@CHOICE" in line:
 				responses.append(line)
 				responses = ([s.strip("@PLAYER ") for s in responses])
 				responses = ([s.strip('\n') for s in responses])
@@ -27,22 +30,20 @@ def readText(filename, npcName):
 				order = ([s.strip("@ORDER ") for s in order])
 				order = ([s.strip('\n') for s in order])
 
-
-def sortText():
-	global responses, npcDialog, order, waiting
-	i = 0
-	e = 0
-	fontHeight = 255 
-	nextRow = 17
-	for letter in order:
-		if letter == 'N':
-			label = graphics._font.render(npcDialog[i], 1, (255,255,255))
+def update():
+	global y, dialog, responses, order, length, next, fontHeight, nextRow
+	if graphics.talking == False:
+		y = 0
+		dialog = []
+		responses = []
+		order = ""
+		length = 0
+		fontHeight = 255
+	if graphics.talking == True & next == True:
+			print dialog[y]
+			label = graphics._font.render(dialog[y], 1, (255,255,255))
 			graphics._screen.blit(label, (10, fontHeight))
-			i = i + 1
 			fontHeight = fontHeight + nextRow
- 		if letter == 'P':
-			label = graphics._font.render(responses[e], 1, (255,255,255))
-			graphics._screen.blit(label, (10, fontHeight))
-			e = e + 1
-			fontHeight = fontHeight + nextRow
+			y = y + 1
+			next = False
 

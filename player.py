@@ -4,6 +4,7 @@ import pygame
 import events
 import math
 import map
+import dialogEngine
 
 class Action(object):
     IDLE   = 0
@@ -52,7 +53,10 @@ class Player(object):
                     self.frame = 0
                     self.takingAction = True
                 elif event.key == pygame.K_c:
-                    graphics._talking = not graphics._talking
+                    graphics.talking = not graphics.talking
+                elif event.key == pygame.K_v:
+                    dialogEngine.next = True
+
             elif event.type is pygame.KEYUP:
                 if event.key == pygame.K_UP:
                     self.directions = self.directions & ~Dir.UP

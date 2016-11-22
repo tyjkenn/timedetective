@@ -5,6 +5,7 @@ import pytmx
 import botManager
 import player
 import bot
+import dialogEngine
 
 pygame.init()
 graphics.init(400, 400)
