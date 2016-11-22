@@ -7,7 +7,6 @@ displayText = ""
 responses = []
 npcDialog = []
 order = ""
-waiting = False
 
 def readText(filename, npcName):
 	global responses, npcDialog, nextFileName, order
@@ -46,16 +45,4 @@ def sortText():
 			graphics._screen.blit(label, (10, fontHeight))
 			e = e + 1
 			fontHeight = fontHeight + nextRow
-		if letter == 'W':
-			waiting = True
-			while waiting:
-				wait()
 
-def wait():
-	global waiting
-	while waiting:
-		pygame.time.wait(3000)
-		for event in events.event_queue:
-			if event.type is pygame.KEYDOWN:
-				if event.key == pygame.K_SPACE:
-					waiting = False;
