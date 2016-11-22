@@ -2,6 +2,7 @@ import pygame
 import pytmx
 import map
 import botManager
+import dialogEngine
 
 images = {}
 
