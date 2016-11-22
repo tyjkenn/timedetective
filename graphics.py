@@ -13,6 +13,10 @@ _font = None
 
 _entities = []
 
+#Dialog Variables
+_talking = False
+_optionPhase = False
+
 def register(entity):
     global _entities
     if entity not in _entities:
@@ -39,6 +43,13 @@ def draw_ui():
     global _screen, _font
     label = _font.render(`botManager.hour` + ":" + `botManager.minute`, 1, (255,255,0))
     _screen.blit(label, (0, 0))
+    if _talking == True:
+        botManager.paused = True
+        pygame.draw.rect(_screen, (0, 0, 0), (0, 250, 400, 150))
+        dialogEngine.readText("test.txt", "John")
+        dialogEngine.sortText()
+    if _talking == False:
+        botManager.paused = False
 
 def update():
     global _screen, _entities
