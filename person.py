@@ -20,8 +20,7 @@ class Person(object):
         if tileX < len(map.groundPoints) - 1:
             tileY1 = map.groundPoints[tileX]
             tileY2 = map.groundPoints[tileX + 1]
-            if tileX > map.leftTileCount - 2:
-                self.y = tileY1 + (tileY2 - tileY1) * percentRight  - 32
+            self.y = tileY1 + (tileY2 - tileY1) * percentRight  - 32
         if (self.directions & Dir.LEFT) and not self.directions & Dir.RIGHT and tileX > -1:
             self.x -= self.walkSpeed
             self.facingRight = False

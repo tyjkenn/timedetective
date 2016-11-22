@@ -25,7 +25,6 @@ class Renderer(object):
                     props = self.tmx_data.get_tile_properties(x, y, layer_index)
                     if props is not None and 'doorLocation' in props and props['doorLocation'] == 'outside':
                         outX = x * 16
-                        print outX
                         found = True
                         break
                 if found:

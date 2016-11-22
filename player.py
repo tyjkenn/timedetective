@@ -20,6 +20,7 @@ class Player(Person):
         self.walkSpeed = 2
         self.directions = 0
         self.takingAction = False
+        self.snapToGround()
 
     def update(self):
         self.handleInput()
@@ -27,6 +28,7 @@ class Player(Person):
         self.checkCollisions()
 
     def handleInput(self):
+        self.takingAction = False
         for event in events.event_queue:
             if event.type is pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
@@ -51,8 +53,6 @@ class Player(Person):
                     self.directions = self.directions & ~Dir.LEFT
                 elif event.key == pygame.K_RIGHT:
                     self.directions = self.directions & ~Dir.RIGHT
-                elif event.key == pygame.K_SPACE:
-                    self.takingAction = False
 
     def move(self):
         self.snapToGround()
@@ -67,9 +67,10 @@ class Player(Person):
                 if self.takingAction and 'doorLocation' in props:
                     location =  props['doorLocation']
                     if location is not None:
-                        print location
                         map.xOffset = 0
                         map.yOffset = 0
                         graphics.set_map(location)
+                        self.x = map.outX
+                        self.snapToGround()
                         break
             layer_index += 1
