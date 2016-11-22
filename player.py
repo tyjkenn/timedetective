@@ -51,6 +51,8 @@ class Player(object):
                 elif event.key == pygame.K_SPACE:
                     self.frame = 0
                     self.takingAction = True
+                elif event.key == pygame.K_c:
+                    graphics.talking = not graphics.talking
             elif event.type is pygame.KEYUP:
                 if event.key == pygame.K_UP:
                     self.directions = self.directions & ~Dir.UP
