@@ -1,4 +1,4 @@
-import scheduleItem
+import graphics
 import botManager
 
 class ScheduleEvent(object):
@@ -9,12 +9,16 @@ class ScheduleEvent(object):
         self.future = True
 
 class Bot(object):
-
+    FRAMES = [(x*32,y*32,32,32) for y in xrange(5) for x in xrange(10)]
     def __init__(self):
+        self.sprite_sheet = graphics.load_image("img/characters.png")
+        self.frame = 1
+        self.walkSpeed = 2
         self.scheduleEvents = []
         item = ScheduleEvent(6, 30, "graveyard")
         self.scheduleEvents.append(item)
-
+        self.action = 0
+        self.facingRight = False
         self.destination = None
         self.location = "plaza"
         self.y = 10
@@ -33,4 +37,4 @@ class Bot(object):
         if self.destination:
             print "Going to", self.destination
             self.location = self.destination
-            self.destination = None
+            self.x += self.walkSpeed

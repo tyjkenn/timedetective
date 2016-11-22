@@ -4,13 +4,14 @@ import events
 import pytmx
 import botManager
 import player
+import bot
 
 pygame.init()
 graphics.init(400, 400)
-graphics.set_map('outside');
-
+graphics.set_map('outside')
 thePlayer = player.Player(200, 100)
 graphics.register(thePlayer)
+botManager.init()
 
 paused = False
 

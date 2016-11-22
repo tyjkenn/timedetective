@@ -1,3 +1,6 @@
+from pygame.locals import *
+import graphics
+import pygame
 import bot
 
 bots = []
@@ -8,9 +11,8 @@ frames = 0
 def createMockBot():
     global bots
     theBot = bot.Bot()
+    graphics.register(theBot)
     bots.append(theBot)
-
-createMockBot()
 
 def tickClock():
     global hour, minute, frames
@@ -27,3 +29,6 @@ def update():
     tickClock()
     for theBot in bots:
         theBot.update()
+
+def init():
+    createMockBot()
