@@ -33,7 +33,7 @@ while True:
         elif e.type == pygame.KEYUP:
             if e.key == pygame.K_F4 and e.mod == pygame.KMOD_ALT:
                 run = False
-    clock.tick(60)
+    clock.tick(120)
     if not run:
         pygame.quit()
         break

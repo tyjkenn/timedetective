@@ -11,13 +11,11 @@ class ScheduleEvent(object):
 
 class Bot(Person):
     FRAMES = [(x*32,y*32,32,32) for y in xrange(5) for x in xrange(10)]
-    def __init__(self, location, x):
+    def __init__(self, location, x, frame):
         self.sprite_sheet = graphics.load_image("img/characters.png")
-        self.frame = 1
+        self.frame = frame
         self.walkSpeed = 2
         self.scheduleEvents = []
-        item = ScheduleEvent(6, 10, "studio")
-        self.scheduleEvents.append(item)
         self.action = 0
         self.facingRight = False
         self.destination = None
@@ -27,7 +25,7 @@ class Bot(Person):
         self.x = x
 
     def addToSchedule(self,scheduleEvent):
-        self.scheduleItems.append(scheduleEvent);
+        self.scheduleEvents.append(scheduleEvent);
 
     def checkSchedule(self):
         for event in self.scheduleEvents:

@@ -2,6 +2,7 @@ from pygame.locals import *
 import graphics
 import pygame
 import bot
+import random
 
 bots = []
 hour = 6
@@ -9,11 +10,29 @@ minute = 0
 frames = 0
 paused = False
 
+roomNames = ['shack','studio','inn','bakery','house']
+
+def randomizeSchedule(theBot):
+    for i in xrange(40):
+        minute = random.randrange(0, 60)
+        hour = random.randrange(6, 12)
+        room = roomNames[random.randrange(0,len(roomNames))]
+        theBot.addToSchedule(bot.ScheduleEvent(hour, minute, room))
+
 def createMockBot():
     global bots
-    theBot = bot.Bot('shack', 200)
-    graphics.register(theBot)
-    bots.append(theBot)
+    hobo = bot.Bot('shack', 200, 1)
+    artist = bot.Bot('studio', 200, 2)
+    chef = bot.Bot('bakery', 200, 3)
+    graphics.register(hobo)
+    graphics.register(artist)
+    graphics.register(chef)
+    bots.append(hobo)
+    bots.append(artist)
+    bots.append(chef)
+    randomizeSchedule(hobo)
+    randomizeSchedule(artist)
+    randomizeSchedule(chef)
 
 def tickClock():
     global hour, minute, frames
