@@ -38,14 +38,18 @@ class Bot(Person):
     def update(self):
         self.checkSchedule()
         self.snapToGround()
-        if self.destination:
-            if self.location != 'outside':
-                if self.x > map.activeRoom.outX + 2:
-                    self.x -= self.walkSpeed
-                    self.facingRight = False
-                elif self.x < map.activeRoom.outX - 2:
-                    self.x += self.walkSpeed
-                    self.facingRight = True
-                else:
-                    self.location = 'outside'
+        tileX = self.x / 16
+        if self.destination and self.location != 'outside':
+            for roomName, doorX in graphics._mapRenderer.rooms[self.location].doors.iteritems():
+                if roomName == 'outside':
+                    if tileX > doorX:
+                        self.x -= self.walkSpeed
+                        self.facingRight = False
+                    elif tileX < doorX:
+                        self.x += self.walkSpeed
+                        self.facingRight = True
+                    else:
+                        oldRoomName = self.location
+                        self.location = 'outside'
+                        self.x = graphics._mapRenderer.rooms[self.location].doors[oldRoomName] * 16
         self.visible = map.activeRoomName == self.location

@@ -61,16 +61,15 @@ class Player(Person):
         layer_index = 0
         mapX = int(self.x / 16)
         mapY = int(self.y / 16)
-        for layer in map.activeRoom.data.layers:
-            props =  map.activeRoom.data.get_tile_properties(mapX, mapY, layer_index)
-            if props is not None:
-                if self.takingAction and 'doorLocation' in props:
-                    location =  props['doorLocation']
-                    if location is not None:
-                        map.xOffset = 0
-                        map.yOffset = 0
-                        graphics.set_map(location)
-                        self.x = map.activeRoom.outX
-                        self.snapToGround()
-                        break
+        if self.takingAction:
+            for roomName, doorX in map.activeRoom.doors.iteritems():
+                if doorX == mapX:
+                    map.xOffset = 0
+                    map.yOffset = 0
+                    oldRoomName = map.activeRoomName
+                    graphics.set_map(roomName)
+                    self.x = map.activeRoom.doors[oldRoomName] * 16
+                    map.xOffset = - self.x + graphics._width / 2
+                    self.snapToGround()
+                    break
             layer_index += 1

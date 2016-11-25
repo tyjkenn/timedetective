@@ -10,10 +10,10 @@ class Room(object):
     def __init__(self, data, size):
         self.data = data
         self.size = size
-        self.outX = 0
         self.groundPoints = []
         self.leftTileCount = 0
         self.rightTileCount = 0
+        self.doors = {}
 
     def findDoors(self):
         layer_index = 0
@@ -21,16 +21,11 @@ class Room(object):
             if layer.name != 'doors':
                 layer_index += 1
                 continue
-            found = False
             for x in xrange(self.data.width):
                 for y in xrange(self.data.height):
                     props = self.data.get_tile_properties(x, y, layer_index)
-                    if props is not None and 'doorLocation' in props and props['doorLocation'] == 'outside':
-                        outX = x * 16
-                        found = True
-                        break
-                if found:
-                    break
+                    if props is not None and 'doorLocation' in props:
+                        self.doors[props['doorLocation']] = x
 
     def findGround(self):
         self.leftTileCount = 0
