@@ -16,7 +16,7 @@ class Bot(Person):
         self.frame = 1
         self.walkSpeed = 2
         self.scheduleEvents = []
-        item = ScheduleEvent(6, 30, "graveyard")
+        item = ScheduleEvent(6, 10, "studio")
         self.scheduleEvents.append(item)
         self.action = 0
         self.facingRight = False
@@ -39,9 +39,9 @@ class Bot(Person):
         self.checkSchedule()
         self.snapToGround()
         tileX = self.x / 16
-        if self.destination and self.location != 'outside':
+        if self.destination:
             for roomName, doorX in graphics._mapRenderer.rooms[self.location].doors.iteritems():
-                if roomName == 'outside':
+                if roomName == self.destination or roomName == 'outside':
                     if tileX > doorX:
                         self.x -= self.walkSpeed
                         self.facingRight = False
@@ -50,6 +50,8 @@ class Bot(Person):
                         self.facingRight = True
                     else:
                         oldRoomName = self.location
-                        self.location = 'outside'
+                        self.location = roomName
                         self.x = graphics._mapRenderer.rooms[self.location].doors[oldRoomName] * 16
+                        if self.location == self.destination:
+                            self.destination = None
         self.visible = map.activeRoomName == self.location
