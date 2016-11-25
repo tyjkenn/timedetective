@@ -25,7 +25,11 @@ def register(entity):
 
 def set_map(mapName):
     global _mapRenderer
-    _mapRenderer = map.Renderer(mapName)
+    if _mapRenderer is None:
+        _mapRenderer = map.Renderer(mapName)
+    else:
+        map.activeRoomName = mapName
+        map.activeRoom = _mapRenderer.rooms[mapName]
 
 def init(width, height, title = 'Time Detective'):
     global _width, _height, _screen, _font
@@ -56,12 +60,13 @@ def update():
     _screen.fill((100,100,255))
     draw_map()
     for entity in _entities:
-        _screen.blit(pygame.transform.flip(
-                            entity.sprite_sheet.subsurface(
-                                entity.FRAMES[10 * entity.action + int(entity.frame)]
-                            ), entity.facingRight, False
-                        ),
-                        (entity.x + map.xOffset, entity.y + map.yOffset))
+        if not hasattr(entity, 'visible') or entity.visible:
+            _screen.blit(pygame.transform.flip(
+                                entity.sprite_sheet.subsurface(
+                                    entity.FRAMES[10 * entity.action + int(entity.frame)]
+                                ), entity.facingRight, False
+                            ),
+                            (entity.x + map.xOffset, entity.y + map.yOffset))
     draw_ui()
     dialogEngine.update()
     pygame.display.flip();

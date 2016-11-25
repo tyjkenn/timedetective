@@ -11,7 +11,7 @@ paused = False
 
 def createMockBot():
     global bots
-    theBot = bot.Bot()
+    theBot = bot.Bot('shack', 200)
     graphics.register(theBot)
     bots.append(theBot)
 
