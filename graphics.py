@@ -20,7 +20,11 @@ def register(entity):
 
 def set_map(mapName):
     global _mapRenderer
-    _mapRenderer = map.Renderer(mapName)
+    if _mapRenderer is None:
+        _mapRenderer = map.Renderer(mapName)
+    else:
+        map.activeRoomName = mapName
+        map.activeRoom = _mapRenderer.rooms[mapName]
 
 def init(width, height, title = 'Time Detective'):
     global _width, _height, _screen, _font

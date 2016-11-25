@@ -40,12 +40,12 @@ class Bot(Person):
         self.snapToGround()
         if self.destination:
             if self.location != 'outside':
-                if self.x > map.outX + 2:
+                if self.x > map.activeRoom.outX + 2:
                     self.x -= self.walkSpeed
                     self.facingRight = False
-                elif self.x < map.outX - 2:
+                elif self.x < map.activeRoom.outX - 2:
                     self.x += self.walkSpeed
                     self.facingRight = True
                 else:
                     self.location = 'outside'
-        self.visible = map.activeStage == self.location
+        self.visible = map.activeRoomName == self.location

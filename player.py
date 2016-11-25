@@ -61,8 +61,8 @@ class Player(Person):
         layer_index = 0
         mapX = int(self.x / 16)
         mapY = int(self.y / 16)
-        for layer in graphics._mapRenderer.tmx_data.layers:
-            props =  graphics._mapRenderer.tmx_data.get_tile_properties(mapX, mapY, layer_index)
+        for layer in map.activeRoom.data.layers:
+            props =  map.activeRoom.data.get_tile_properties(mapX, mapY, layer_index)
             if props is not None:
                 if self.takingAction and 'doorLocation' in props:
                     location =  props['doorLocation']
@@ -70,7 +70,7 @@ class Player(Person):
                         map.xOffset = 0
                         map.yOffset = 0
                         graphics.set_map(location)
-                        self.x = map.outX
+                        self.x = map.activeRoom.outX
                         self.snapToGround()
                         break
             layer_index += 1
