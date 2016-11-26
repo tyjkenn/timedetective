@@ -19,9 +19,9 @@ paused = False
 def update():
     events.update()
     thePlayer.update()
-    graphics.update()
     if not paused:
         botManager.update()
+    graphics.update()
 
 run = True
 clock = pygame.time.Clock()
@@ -33,7 +33,7 @@ while True:
         elif e.type == pygame.KEYUP:
             if e.key == pygame.K_F4 and e.mod == pygame.KMOD_ALT:
                 run = False
-    clock.tick(120)
+    clock.tick(200)
     if not run:
         pygame.quit()
         break

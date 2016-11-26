@@ -24,15 +24,23 @@ def createMockBot():
     hobo = bot.Bot('shack', 200, 1)
     artist = bot.Bot('studio', 200, 2)
     chef = bot.Bot('bakery', 200, 3)
+    innkeeper = bot.Bot('inn', 200, 4)
+    huntress = bot.Bot('house', 200, 7)
     graphics.register(hobo)
     graphics.register(artist)
     graphics.register(chef)
+    graphics.register(innkeeper)
+    graphics.register(huntress)
     bots.append(hobo)
     bots.append(artist)
     bots.append(chef)
+    bots.append(innkeeper)
+    bots.append(huntress)
     randomizeSchedule(hobo)
     randomizeSchedule(artist)
     randomizeSchedule(chef)
+    randomizeSchedule(innkeeper)
+    randomizeSchedule(huntress)
 
 def tickClock():
     global hour, minute, frames

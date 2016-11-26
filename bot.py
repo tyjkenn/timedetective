@@ -53,3 +53,5 @@ class Bot(Person):
                         if self.location == self.destination:
                             self.destination = None
         self.visible = map.activeRoomName == self.location
+        if self.visible:
+            self.snapToGround()

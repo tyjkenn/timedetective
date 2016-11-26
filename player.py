@@ -15,7 +15,7 @@ class Player(Person):
         self.x = x
         self.y = y
         self.facingRight = False
-        self.frame = 0
+        self.frame = 9
         self.action = Action.IDLE
         self.speed = 0
         self.walkSpeed = 2
@@ -43,7 +43,6 @@ class Player(Person):
                     self.directions = self.directions | Dir.RIGHT
                     self.facingRight = True
                 elif event.key == pygame.K_SPACE:
-                    self.frame = 0
                     self.takingAction = True
                 elif event.key == pygame.K_c:
                     graphics.talking = not graphics.talking

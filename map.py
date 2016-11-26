@@ -1,6 +1,7 @@
 import pygame as pg
 import os
 import pytmx
+import graphics
 from pytmx import util_pygame
 
 xOffset = 0
@@ -25,7 +26,7 @@ class Room(object):
                 for y in xrange(self.data.height):
                     props = self.data.get_tile_properties(x, y, layer_index)
                     if props is not None and 'doorLocation' in props:
-                        self.doors[props['doorLocation']] = x
+                        self.doors[props['doorLocation']] = x - 1
 
     def findGround(self):
         self.leftTileCount = 0
@@ -84,7 +85,7 @@ class Renderer(object):
         activeRoomName = mapName
 
     def render(self, surface):
-        global activeRoom
+        global activeRoom, xOffset
         tw = activeRoom.data.tilewidth
         th = activeRoom.data.tileheight
 
@@ -94,9 +95,12 @@ class Renderer(object):
         for layer in activeRoom.data.visible_layers:
             if isinstance(layer, pytmx.TiledTileLayer):
                 for x, y, gid in layer:
-                    theTile = activeRoom.data.get_tile_image_by_gid(gid)
-                    if theTile:
-                        surface.blit(theTile, (x * tw + xOffset, y * th + yOffset))
+                    minX = -xOffset / 16 - 1
+                    maxX = (-xOffset + graphics._width) / 16 + 1
+                    if x > minX and x < maxX:
+                        theTile = activeRoom.data.get_tile_image_by_gid(gid)
+                        if theTile:
+                            surface.blit(theTile, (x * tw + xOffset, y * th + yOffset))
 
             elif isinstance(layer, pytmx.TiledObjectGroup):
                 pass
