@@ -5,6 +5,7 @@ import events
 import math
 import map
 import dialogEngine
+import botManager
 from person import *
 
 class Player(Person):
@@ -65,10 +66,14 @@ class Player(Person):
         self.snapToGround()
 
     def checkCollisions(self):
-        layer_index = 0
         mapX = int(self.x / 16)
         mapY = int(self.y / 16)
         if self.takingAction:
+            for bot in botManager.bots:
+                if bot.location == map.activeRoomName and bot.x < self.x + 16 and bot.x > self.x - 16:
+                    for clue in bot.clues:
+                        print clue
+                    return
             for roomName, doorX in map.activeRoom.doors.iteritems():
                 if doorX == mapX:
                     map.xOffset = 0
@@ -78,5 +83,4 @@ class Player(Person):
                     self.x = map.activeRoom.doors[oldRoomName] * 16
                     map.xOffset = - self.x + graphics._width / 2
                     self.snapToGround()
-                    break
-            layer_index += 1
+                    return

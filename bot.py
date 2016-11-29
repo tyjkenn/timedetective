@@ -25,6 +25,7 @@ class Bot(Person):
         self.directions = 0
         self.x = x
         self.randomRoomPos = 0
+        self.clues = []
 
     def addToSchedule(self,scheduleEvent):
         self.scheduleEvents.append(scheduleEvent);

@@ -19,6 +19,13 @@ def randomizeSchedule(theBot):
         room = roomNames[random.randrange(0,len(roomNames))]
         theBot.addToSchedule(bot.ScheduleEvent(hour, minute, room))
 
+def randomizeClues():
+    global bots
+    clues = ["clue 1", "clue 2", "clue 3", "clue 4", "clue 5"]
+    for bot in bots:
+        clue = clues.pop(random.randint(0,len(clues) - 1))
+        bot.clues.append(clue)
+
 def createMockBot():
     global bots
     hobo = bot.Bot('shack', 200, 1)
@@ -61,3 +68,4 @@ def update():
 
 def init():
     createMockBot()
+    randomizeClues()
