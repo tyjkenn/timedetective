@@ -1,5 +1,6 @@
 import graphics
 import botManager
+import random
 from person import *
 
 class ScheduleEvent(object):
@@ -23,6 +24,7 @@ class Bot(Person):
         self.y = 10
         self.directions = 0
         self.x = x
+        self.randomRoomPos = 0
 
     def addToSchedule(self,scheduleEvent):
         self.scheduleEvents.append(scheduleEvent);
@@ -38,20 +40,26 @@ class Bot(Person):
         self.snapToGround()
         tileX = self.x / 16
         if self.destination:
-            for roomName, doorX in graphics._mapRenderer.rooms[self.location].doors.iteritems():
-                if roomName == self.destination or roomName == 'outside':
-                    if tileX > doorX:
-                        self.x -= self.walkSpeed
-                        self.facingRight = False
-                    elif tileX < doorX:
-                        self.x += self.walkSpeed
-                        self.facingRight = True
-                    else:
-                        oldRoomName = self.location
-                        self.location = roomName
-                        self.x = graphics._mapRenderer.rooms[self.location].doors[oldRoomName] * 16
-                        if self.location == self.destination:
-                            self.destination = None
+            if self.destination != self.location:
+                for roomName, doorX in graphics._mapRenderer.rooms[self.location].doors.iteritems():
+                    if roomName == self.destination or roomName == 'outside':
+                        if tileX > doorX:
+                            self.x -= self.walkSpeed
+                            self.facingRight = False
+                        elif tileX < doorX:
+                            self.x += self.walkSpeed
+                            self.facingRight = True
+                        else:
+                            oldRoomName = self.location
+                            self.location = roomName
+                            self.x = graphics._mapRenderer.rooms[self.location].doors[oldRoomName] * 16
+                            self.randomRoomPos = random.randrange(-100,100)
+            else:
+                midPoint = graphics._mapRenderer.rooms[self.location].data.width * 16 / 2
+                if self.x < midPoint + self.randomRoomPos:
+                    self.x += self.walkSpeed
+                else:
+                    self.destination = None
         self.visible = map.activeRoomName == self.location
         if self.visible:
             self.snapToGround()
