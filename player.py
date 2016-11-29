@@ -47,6 +47,8 @@ class Player(Person):
                 elif event.key == pygame.K_c:
                     graphics.talking = not graphics.talking
                 elif event.key == pygame.K_v:
+                    graphics.optionPhase = True
+                elif event.key == pygame.K_v:
                     dialogEngine.next = True
 
             elif event.type is pygame.KEYUP:

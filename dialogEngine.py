@@ -5,6 +5,7 @@ import events
 next = True
 responses = []
 dialog = []
+label = {}
 order = ""
 length = 0
 y = 0
@@ -31,19 +32,22 @@ def readText(filename, npcName):
 				order = ([s.strip('\n') for s in order])
 
 def update():
-	global y, dialog, responses, order, length, next, fontHeight, nextRow
+	global y, dialog, responses, order, length, next, fontHeight, nextRow, label
 	if graphics.talking == False:
 		y = 0
 		dialog = []
-		responses = []
+		respxonses = []
 		order = ""
 		length = 0
-		fontHeight = 255
-	if graphics.talking == True & next == True:
-			print dialog[y]
-			label = graphics._font.render(dialog[y], 1, (255,255,255))
-			graphics._screen.blit(label, (10, fontHeight))
-			fontHeight = fontHeight + nextRow
-			y = y + 1
-			next = False
 
+	if graphics.talking == True & graphics.optionPhase == True:
+			print dialog[y]
+			label[y] = (graphics._font.render(dialog[y], 1, (255,255,0)))
+			y = y + 1
+			graphics.optionPhase = False
+
+	for x in label:
+		graphics._screen.blit(label[x], (15, fontHeight))
+		fontHeight = fontHeight + nextRow
+		
+	fontHeight = 255

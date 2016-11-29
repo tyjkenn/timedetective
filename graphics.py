@@ -52,6 +52,7 @@ def draw_ui():
         botManager.paused = True
         pygame.draw.rect(_screen, (0, 0, 0), (0, 250, 400, 150))
         dialogEngine.readText("test.txt", "John")
+        dialogEngine.update()
     if talking == False:
         botManager.paused = False
 
@@ -68,7 +69,6 @@ def update():
                             ),
                             (entity.x + map.xOffset, entity.y + map.yOffset))
     draw_ui()
-    dialogEngine.update()
     pygame.display.flip();
 
 def load_image(path):
