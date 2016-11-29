@@ -26,6 +26,13 @@ def randomizeClues():
         clue = clues.pop(random.randint(0,len(clues) - 1))
         bot.clues.append(clue)
 
+def randomizeBehaviors():
+    global bots
+    behaviors = [bot.Behavior.Gossiper, bot.Behavior.Standoffish]
+    for theBot in bots:
+        if len(behaviors) > 0:
+            theBot.behavior = behaviors.pop(random.randint(0, len(behaviors) - 1))
+
 def createMockBot():
     global bots
     hobo = bot.Bot('shack', 200, 1)
@@ -69,3 +76,4 @@ def update():
 def init():
     createMockBot()
     randomizeClues()
+    randomizeBehaviors()

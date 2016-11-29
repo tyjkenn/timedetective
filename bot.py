@@ -3,6 +3,10 @@ import botManager
 import random
 from person import *
 
+class Behavior(object):
+    Gossiper = 0
+    Standoffish = 1
+
 class ScheduleEvent(object):
     def __init__(self, hour, minute, place):
         self.hour = hour
@@ -26,6 +30,7 @@ class Bot(Person):
         self.x = x
         self.randomRoomPos = 0
         self.clues = []
+        self.behavior = None
 
     def addToSchedule(self,scheduleEvent):
         self.scheduleEvents.append(scheduleEvent);

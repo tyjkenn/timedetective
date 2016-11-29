@@ -2,6 +2,7 @@ from pygame.locals import *
 import graphics
 import pygame
 import events
+import bot
 import math
 import map
 import dialogEngine
@@ -69,10 +70,13 @@ class Player(Person):
         mapX = int(self.x / 16)
         mapY = int(self.y / 16)
         if self.takingAction:
-            for bot in botManager.bots:
-                if bot.location == map.activeRoomName and bot.x < self.x + 16 and bot.x > self.x - 16:
-                    for clue in bot.clues:
-                        print clue
+            for theBot in botManager.bots:
+                if theBot.location == map.activeRoomName and theBot.x < self.x + 16 and theBot.x > self.x - 16:
+                    if theBot.behavior == bot.Behavior.Standoffish:
+                        print "Go away"
+                    else:
+                        for clue in theBot.clues:
+                            print clue
                     return
             for roomName, doorX in map.activeRoom.doors.iteritems():
                 if doorX == mapX:
