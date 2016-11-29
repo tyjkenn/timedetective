@@ -17,6 +17,7 @@ _entities = []
 #Dialog Variables
 talking = False
 optionPhase = False
+firstRun = True
 
 def register(entity):
     global _entities
@@ -45,16 +46,19 @@ def draw_map():
     _mapRenderer.render(_screen)
 
 def draw_ui():
-    global _screen, _font
+    global _screen, _font, firstRun
     label = _font.render(`botManager.hour` + ":" + `botManager.minute`, 1, (255,255,0))
     _screen.blit(label, (0, 0))
     if talking == True:
         botManager.paused = True
         pygame.draw.rect(_screen, (0, 0, 0), (0, 250, 400, 150))
-        dialogEngine.readText("test.txt", "John")
+        if firstRun == True:
+            dialogEngine.readText("test.txt")
+            firstRun = False
         dialogEngine.update()
     if talking == False:
         botManager.paused = False
+        firstRun = True
 
 def update():
     global _screen, _entities
