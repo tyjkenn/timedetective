@@ -6,6 +6,9 @@ from person import *
 class Behavior(object):
     Gossiper = 0
     Standoffish = 1
+    Liar = 2
+    Friendly = 3
+    Hospitable = 4
 
 class ScheduleEvent(object):
     def __init__(self, hour, minute, place):
@@ -16,10 +19,10 @@ class ScheduleEvent(object):
 
 class Bot(Person):
     FRAMES = [(x*32,y*32,32,32) for y in xrange(5) for x in xrange(10)]
-    def __init__(self, location, x, frame):
+    def __init__(self, location, x, frame, name):
         self.sprite_sheet = graphics.load_image("img/characters.png")
         self.frame = frame
-        self.walkSpeed = 2
+        self.walkSpeed = 1
         self.scheduleEvents = []
         self.action = 0
         self.facingRight = False
@@ -31,6 +34,7 @@ class Bot(Person):
         self.randomRoomPos = 0
         self.clues = []
         self.behavior = None
+        self.name = name
 
     def addToSchedule(self,scheduleEvent):
         self.scheduleEvents.append(scheduleEvent);
@@ -40,6 +44,14 @@ class Bot(Person):
             if event.future and botManager.hour >= event.hour and botManager.minute >= event.minute:
                 self.destination = event.place
                 event.future = False
+
+    def handleBehavior(self):
+        if self.behavior == Behavior.Gossiper:
+            for other in botManager.bots:
+                if other.location == self.location and self.location != 'outside':
+                    for clue in self.clues:
+                        if clue not in other.clues:
+                            other.clues.append(clue)
 
     def update(self):
         self.checkSchedule()
@@ -67,5 +79,6 @@ class Bot(Person):
                 else:
                     self.destination = None
         self.visible = map.activeRoomName == self.location
+        self.handleBehavior()
         if self.visible:
             self.snapToGround()

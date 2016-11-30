@@ -73,10 +73,10 @@ class Player(Person):
             for theBot in botManager.bots:
                 if theBot.location == map.activeRoomName and theBot.x < self.x + 16 and theBot.x > self.x - 16:
                     if theBot.behavior == bot.Behavior.Standoffish:
-                        print "Go away"
+                        print theBot.name + ": Go away"
                     else:
                         for clue in theBot.clues:
-                            print clue
+                            print theBot.name + ": " + clue
                     return
             for roomName, doorX in map.activeRoom.doors.iteritems():
                 if doorX == mapX:

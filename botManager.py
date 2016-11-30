@@ -28,18 +28,18 @@ def randomizeClues():
 
 def randomizeBehaviors():
     global bots
-    behaviors = [bot.Behavior.Gossiper, bot.Behavior.Standoffish]
+    behaviors = [bot.Behavior.Gossiper, bot.Behavior.Standoffish, bot.Behavior.Liar, bot.Behavior.Friendly, bot.Behavior.Gossiper]
     for theBot in bots:
         if len(behaviors) > 0:
             theBot.behavior = behaviors.pop(random.randint(0, len(behaviors) - 1))
 
 def createMockBot():
     global bots
-    hobo = bot.Bot('shack', 200, 1)
-    artist = bot.Bot('studio', 200, 2)
-    chef = bot.Bot('bakery', 200, 3)
-    innkeeper = bot.Bot('inn', 200, 4)
-    huntress = bot.Bot('house', 200, 7)
+    hobo = bot.Bot('shack', 200, 1, "Hobo")
+    artist = bot.Bot('studio', 200, 2, "Artist")
+    chef = bot.Bot('bakery', 200, 3, "Chef")
+    innkeeper = bot.Bot('inn', 200, 4, "Innkeeper")
+    huntress = bot.Bot('house', 200, 7, "Huntress")
     graphics.register(hobo)
     graphics.register(artist)
     graphics.register(chef)
