@@ -12,6 +12,7 @@ graphics.init(400, 400)
 graphics.set_map('outside')
 thePlayer = player.Player(200, 100)
 graphics.register(thePlayer)
+dialogEngine.readJson("dialog.json");
 botManager.init()
 
 paused = False

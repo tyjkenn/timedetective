@@ -1,0 +1,16 @@
+{
+  "greetings":{
+    "Hobo":"Please spare some change.",
+    "Artist":"Hi.",
+    "Chef":"Howdy!",
+    "Innkeeper":"Welcome.",
+    "Huntress":"Greetings."
+  },
+  "clues": [
+    "[Gossiper] is such a gossiper",
+    "Don't trust anything [Liar] says.",
+    "[Friendly] is so friendly. People tell that person everything.",
+    "[Hospitable] is too nice. Won't leave until you leave.",
+    "[Standoffish] only trusts a few friends."
+  ]
+}

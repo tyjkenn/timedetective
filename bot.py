@@ -3,12 +3,13 @@ import botManager
 import random
 from person import *
 
-class Behavior(object):
-    Gossiper = 0
-    Standoffish = 1
-    Liar = 2
-    Friendly = 3
-    Hospitable = 4
+behaviors = [
+    "Gossiper",
+    "Standoffish",
+    "Liar",
+    "Friendly",
+    "Hospitable",
+]
 
 class ScheduleEvent(object):
     def __init__(self, hour, minute, place):
@@ -46,7 +47,7 @@ class Bot(Person):
                 event.future = False
 
     def handleBehavior(self):
-        if self.behavior == Behavior.Gossiper:
+        if self.behavior == "Gossiper":
             for other in botManager.bots:
                 if other.location == self.location and self.location != 'outside':
                     for clue in self.clues:

@@ -3,6 +3,8 @@ import graphics
 import pygame
 import bot
 import random
+import dialogEngine
+import re
 
 bots = []
 hour = 6
@@ -21,14 +23,21 @@ def randomizeSchedule(theBot):
 
 def randomizeClues():
     global bots
-    clues = ["clue 1", "clue 2", "clue 3", "clue 4", "clue 5"]
-    for bot in bots:
+    clues = dialogEngine.dialog["clues"]
+    for bot1 in bots:
         clue = clues.pop(random.randint(0,len(clues) - 1))
-        bot.clues.append(clue)
+        token = re.search(r"\[([A-Za-z0-9_]+)\]", clue)
+        if token != None:
+            for bot2 in bots:
+                if bot2.behavior == token.group(1):
+                    clue = re.sub(r"\[([A-Za-z0-9_]+)\]", bot2.name, clue)
+                    break
+
+        bot1.clues.append(clue)
 
 def randomizeBehaviors():
     global bots
-    behaviors = [bot.Behavior.Gossiper, bot.Behavior.Standoffish, bot.Behavior.Liar, bot.Behavior.Friendly, bot.Behavior.Gossiper]
+    behaviors = bot.behaviors[:]
     for theBot in bots:
         if len(behaviors) > 0:
             theBot.behavior = behaviors.pop(random.randint(0, len(behaviors) - 1))
@@ -75,5 +84,5 @@ def update():
 
 def init():
     createMockBot()
-    randomizeClues()
     randomizeBehaviors()
+    randomizeClues()
