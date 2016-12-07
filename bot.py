@@ -1,6 +1,7 @@
 import graphics
 import botManager
 import random
+import player
 from person import *
 
 behaviors = [
@@ -43,8 +44,15 @@ class Bot(Person):
     def checkSchedule(self):
         for event in self.scheduleEvents:
             if event.future and botManager.hour >= event.hour and botManager.minute >= event.minute:
-                self.destination = event.place
                 event.future = False
+                if self.location != 'outside':
+                    if self.location == map.activeRoomName:
+                        return
+                    if self.behavior == "Hospitable":
+                        for other in botManager.bots:
+                            if other != self and other.location == self.location:
+                                return
+                self.destination = event.place
 
     def handleBehavior(self):
         if self.behavior == "Gossiper":
