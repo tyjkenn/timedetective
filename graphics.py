@@ -52,13 +52,9 @@ def draw_ui():
     if talking == True:
         botManager.paused = True
         pygame.draw.rect(_screen, (0, 0, 0), (0, 250, 400, 150))
-        if firstRun == True:
-            dialogEngine.readText("test.txt")
-            firstRun = False
         dialogEngine.update()
     if talking == False:
         botManager.paused = False
-        firstRun = True
 
 def update():
     global _screen, _entities

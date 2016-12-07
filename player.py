@@ -35,7 +35,7 @@ class Player(Person):
         for event in events.event_queue:
             if event.type is pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
-                    self.directions = self.directions | Dir.UP
+                    self.directions = self.directions | Dir.UP 
                 elif event.key == pygame.K_DOWN:
                     self.directions = self.directions | Dir.DOWN
                 if event.key == pygame.K_LEFT:
@@ -46,12 +46,6 @@ class Player(Person):
                     self.facingRight = True
                 elif event.key == pygame.K_SPACE:
                     self.takingAction = True
-                elif event.key == pygame.K_c:
-                    graphics.talking = not graphics.talking
-                elif event.key == pygame.K_v:
-                    graphics.optionPhase = True
-                elif event.key == pygame.K_v:
-                    dialogEngine.next = True
 
             elif event.type is pygame.KEYUP:
                 if event.key == pygame.K_UP:
@@ -70,17 +64,20 @@ class Player(Person):
         mapX = int(self.x / 16)
         mapY = int(self.y / 16)
         if self.takingAction:
-            for theBot in botManager.bots:
-                if theBot.location == map.activeRoomName and theBot.x < self.x + 16 and theBot.x > self.x - 16:
-                    dialogEngine.showDialog(theBot)
-                    return
-            for roomName, doorX in map.activeRoom.doors.iteritems():
-                if doorX == mapX:
-                    map.xOffset = 0
-                    map.yOffset = 0
-                    oldRoomName = map.activeRoomName
-                    graphics.set_map(roomName)
-                    self.x = map.activeRoom.doors[oldRoomName] * 16
-                    map.xOffset = - self.x + graphics._width / 2
-                    self.snapToGround()
-                    return
+            if graphics.talking == True:
+                graphics.talking = False
+            else:
+                for theBot in botManager.bots:
+                    if theBot.location == map.activeRoomName and theBot.x < self.x + 16 and theBot.x > self.x - 16:
+                        dialogEngine.showDialog(theBot)
+                        return
+                for roomName, doorX in map.activeRoom.doors.iteritems():
+                    if doorX == mapX:
+                        map.xOffset = 0
+                        map.yOffset = 0
+                        oldRoomName = map.activeRoomName
+                        graphics.set_map(roomName)
+                        self.x = map.activeRoom.doors[oldRoomName] * 16
+                        map.xOffset = - self.x + graphics._width / 2
+                        self.snapToGround()
+                        return
