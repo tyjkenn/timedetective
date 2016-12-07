@@ -5,9 +5,8 @@ import json
 import bot
 import textwrap
 
-dialog = {}
+dialog = []
 label = {}
-y = 0
 fontHeight = 255
 nextRow = 17
 currentText = ""
@@ -17,15 +16,6 @@ def readJson(filename):
 	global dialog
 	with open(filename) as myfile:
 		dialog = json.load(myfile)
-
-def readText(filename):
-	global responses, dialog, nextFileName
-	with open (filename, 'r') as myfile:
-		for line in myfile:
-			if "@DIALOG" in line:
-				dialog.append(line)
-				dialog = ([s.replace("@DIALOG","") for s in dialog])
-				dialog = ([s.strip('\n') for s in dialog])
 
 def showDialog(theBot):
 	global dialog, currentText, visible, label

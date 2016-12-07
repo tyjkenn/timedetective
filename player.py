@@ -46,12 +46,6 @@ class Player(Person):
                     self.facingRight = True
                 elif event.key == pygame.K_SPACE:
                     self.takingAction = True
-                elif event.key == pygame.K_c:
-                    graphics.talking = not graphics.talking
-                elif event.key == pygame.K_v:
-                    graphics.optionPhase = True
-                elif event.key == pygame.K_v:
-                    dialogEngine.next = True
 
             elif event.type is pygame.KEYUP:
                 if event.key == pygame.K_UP:
