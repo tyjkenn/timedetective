@@ -55,12 +55,12 @@ class Bot(Person):
                 self.destination = event.place
 
     def handleBehavior(self):
-        if self.behavior == "Gossiper":
             for other in botManager.bots:
-                if other.location == self.location and self.location != 'outside':
-                    for clue in self.clues:
-                        if clue not in other.clues:
-                            other.clues.append(clue)
+                if self.behavior == "Gossiper" or other.behavior == "Friendly":
+                    if other.location == self.location and self.location != 'outside':
+                        for clue in self.clues:
+                            if clue not in other.clues:
+                                other.clues.append(clue)
 
     def update(self):
         self.checkSchedule()

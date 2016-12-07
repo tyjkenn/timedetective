@@ -25,7 +25,7 @@ def showDialog(theBot):
 		currentText += "Go away"
 	else:
 		for clue in theBot.clues:
-			currentText += clue
+			currentText += clue + " "
 	visible = True
 
 def update():

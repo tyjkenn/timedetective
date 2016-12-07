@@ -28,10 +28,14 @@ def randomizeClues():
         clue = clues.pop(random.randint(0,len(clues) - 1))
         token = re.search(r"\[([A-Za-z0-9_]+)\]", clue)
         if token != None:
-            for bot2 in bots:
-                if bot2.behavior == token.group(1):
-                    clue = re.sub(r"\[([A-Za-z0-9_]+)\]", bot2.name, clue)
-                    break
+            if bot1.behavior == "Liar":
+                randBot = random.choice(bots)
+                clue = re.sub(r"\[([A-Za-z0-9_]+)\]", randBot.name, clue)
+            else:
+                for bot2 in bots:
+                    if bot2.behavior == token.group(1):
+                        clue = re.sub(r"\[([A-Za-z0-9_]+)\]", bot2.name, clue)
+                        break
         bot1.clues.append(clue)
 
 def randomizeBehaviors():
@@ -48,21 +52,22 @@ def createMockBot():
     chef = bot.Bot('bakery', 200, 3, "Chef")
     innkeeper = bot.Bot('inn', 200, 4, "Innkeeper")
     huntress = bot.Bot('house', 200, 7, "Huntress")
-    graphics.register(hobo)
-    graphics.register(artist)
-    graphics.register(chef)
-    graphics.register(innkeeper)
-    graphics.register(huntress)
+    oldMan = bot.Bot('house2', 200, 0, "Old Man")
+    scientist = bot.Bot('lab', 200, 3, "Scientist")
+    gardener = bot.Bot('garden', 200, 6, "Gardener")
+    merchant = bot.Bot('house3', 200, 8, "Merchant")
     bots.append(hobo)
     bots.append(artist)
     bots.append(chef)
     bots.append(innkeeper)
     bots.append(huntress)
-    randomizeSchedule(hobo)
-    randomizeSchedule(artist)
-    randomizeSchedule(chef)
-    randomizeSchedule(innkeeper)
-    randomizeSchedule(huntress)
+    bots.append(oldMan)
+    bots.append(scientist)
+    bots.append(gardener)
+    bots.append(merchant)
+    for theBot in bots:
+        graphics.register(theBot)
+        randomizeSchedule(theBot)
 
 def tickClock():
     global hour, minute, frames

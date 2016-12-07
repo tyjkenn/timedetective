@@ -4,13 +4,21 @@
     "Artist":"Hi.",
     "Chef":"Howdy!",
     "Innkeeper":"Welcome.",
-    "Huntress":"Greetings."
+    "Huntress":"Greetings.",
+    "Old Man":"Hello, wippersnapper.",
+    "Scientist":"Maybe if I...",
+    "Gardener":"Lovely day we are having.",
+    "Merchant":"Saluton Mondo."
   },
   "clues": [
     "[Gossiper] is such a gossiper",
     "Don't trust anything [Liar] says.",
     "[Friendly] is so friendly. People tell that person everything.",
     "[Hospitable] is too nice. Won't leave until you leave.",
-    "[Standoffish] only trusts a few friends."
+    "[Standoffish] only trusts a few friends.",
+    "I have no useful hints.",
+    "Sorry. Haven't seen anything suspicious.",
+    "I am clueless.",
+    "I'm not telling."
   ]
 }
