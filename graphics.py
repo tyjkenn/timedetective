@@ -49,16 +49,15 @@ def draw_ui():
     global _screen, _font, firstRun
     label = _font.render(`botManager.hour` + ":" + `botManager.minute`, 1, (255,255,0))
     _screen.blit(label, (0, 0))
-    if talking == True:
+    if dialogEngine.visible:
         botManager.paused = True
         pygame.draw.rect(_screen, (0, 0, 0), (0, 250, 400, 150))
-        if firstRun == True:
-            dialogEngine.readText("test.txt")
-            firstRun = False
         dialogEngine.update()
-    if talking == False:
+        for x in dialogEngine.label:
+    		_screen.blit(dialogEngine.label[x], (15, dialogEngine.fontHeight))
+    		dialogEngine.fontHeight = dialogEngine.fontHeight + dialogEngine.nextRow
+    else:
         botManager.paused = False
-        firstRun = True
 
 def update():
     global _screen, _entities

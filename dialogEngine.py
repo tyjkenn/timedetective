@@ -3,12 +3,15 @@ import graphics
 import events
 import json
 import bot
+import textwrap
 
 dialog = {}
 label = {}
 y = 0
 fontHeight = 255
 nextRow = 17
+currentText = ""
+visible = False
 
 def readJson(filename):
 	global dialog
@@ -25,31 +28,21 @@ def readText(filename):
 				dialog = ([s.strip('\n') for s in dialog])
 
 def showDialog(theBot):
-	global dialog
-	print theBot.name + ": " + dialog["greetings"][theBot.name];
+	global dialog, currentText, visible, label
+	label = {}
+	currentText = theBot.name + ": " + dialog["greetings"][theBot.name] + " "
 	if theBot.behavior == "Standoffish":
-		print "Go away"
+		currentText += "Go away"
 	else:
 		for clue in theBot.clues:
-			print clue
+			currentText += clue
+	visible = True
 
 def update():
-	global y, dialog, fontHeight, nextRow, label
+	global y, dialog, fontHeight, nextRow, label, currentText
 
-	if graphics.talking == True & graphics.optionPhase == True:
-		label[y] = (graphics._font.render(dialog[y], 1, (255,255,0)))
-		y = y + 1
-		graphics.optionPhase = False
-		print len(dialog)
-		print y
-		if y > len(dialog) - 1:
-			graphics.talking = False
-			y = 0
-			label = {}
-			dialog = []
-
-	for x in label:
-		graphics._screen.blit(label[x], (15, fontHeight))
-		fontHeight = fontHeight + nextRow
-
+	if visible:
+		lines = textwrap.wrap(currentText, 38)
+		for i in xrange(len(lines)):
+			label[i] = (graphics._font.render(lines[i], 1, (255,255,0)))
 	fontHeight = 255

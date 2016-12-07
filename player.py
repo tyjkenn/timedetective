@@ -64,7 +64,8 @@ class Player(Person):
                     self.directions = self.directions & ~Dir.RIGHT
 
     def move(self):
-        self.snapToGround()
+        if not dialogEngine.visible:
+            self.snapToGround()
 
     def checkCollisions(self):
         mapX = int(self.x / 16)
@@ -72,7 +73,10 @@ class Player(Person):
         if self.takingAction:
             for theBot in botManager.bots:
                 if theBot.location == map.activeRoomName and theBot.x < self.x + 16 and theBot.x > self.x - 16:
-                    dialogEngine.showDialog(theBot)
+                    if dialogEngine.visible:
+                        dialogEngine.visible = False
+                    else:
+                        dialogEngine.showDialog(theBot)
                     return
             for roomName, doorX in map.activeRoom.doors.iteritems():
                 if doorX == mapX:

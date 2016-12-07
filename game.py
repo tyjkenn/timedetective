@@ -20,7 +20,7 @@ paused = False
 def update():
     events.update()
     thePlayer.update()
-    if not paused:
+    if not dialogEngine.visible:
         botManager.update()
     graphics.update()
 

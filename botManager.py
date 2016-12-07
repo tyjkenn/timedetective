@@ -32,7 +32,6 @@ def randomizeClues():
                 if bot2.behavior == token.group(1):
                     clue = re.sub(r"\[([A-Za-z0-9_]+)\]", bot2.name, clue)
                     break
-
         bot1.clues.append(clue)
 
 def randomizeBehaviors():
