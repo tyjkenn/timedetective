@@ -15,14 +15,26 @@ graphics.register(thePlayer)
 dialogEngine.readJson("dialog.json");
 botManager.init()
 
+gameState = "start"
 paused = False
 
 def update():
+    global gameState
     events.update()
-    thePlayer.update()
-    if not dialogEngine.visible:
-        botManager.update()
-    graphics.update()
+    if gameState == "start":
+        graphics.intro()
+        for event in events.event_queue:
+            if event.type is pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                gameState = "interact"
+    elif gameState == "interact":
+        thePlayer.update()
+        if not dialogEngine.visible:
+            botManager.update()
+        graphics.update()
+    elif gameState == "end":
+        pass
+    elif gameState == "win":
+        pass
 
 run = True
 clock = pygame.time.Clock()

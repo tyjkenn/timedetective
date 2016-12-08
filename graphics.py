@@ -3,6 +3,7 @@ import pytmx
 import map
 import botManager
 import dialogEngine
+import textwrap
 
 images = {}
 
@@ -58,6 +59,16 @@ def draw_ui():
     		dialogEngine.fontHeight = dialogEngine.fontHeight + dialogEngine.nextRow
     else:
         botManager.paused = False
+
+def intro():
+    global _screen, _font
+    _screen.fill((0,0,0))
+    text = "You intercept a note hinting of a planned murder. You journey to a small town to investigate..."
+    lines = textwrap.wrap(text, 35)
+    for i in xrange(len(lines)):
+        label = (_font.render(lines[i], 1, (255,255,255)))
+        _screen.blit(label, (30, 100 + (i*20)))
+    pygame.display.flip();
 
 def update():
     global _screen, _entities
