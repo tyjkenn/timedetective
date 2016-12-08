@@ -21,20 +21,37 @@ def randomizeSchedule(theBot):
         room = roomNames[random.randrange(0,len(roomNames))]
         theBot.addToSchedule(bot.ScheduleEvent(hour, minute, room))
 
+def randomizeRoles():
+    global bots
+    roles = bot.roles[:]
+    for theBot in bots:
+        if len(roles) > 0:
+            theBot.role = roles.pop(random.randint(0, len(roles) - 1))
+
 def randomizeClues():
     global bots
     clues = dialogEngine.dialog["clues"]
     for bot1 in bots:
         clue = clues.pop(random.randint(0,len(clues) - 1))
-        token = re.search(r"\[([A-Za-z0-9_]+)\]", clue)
-        if token != None:
+        behaviorToken = re.search(r"\[([A-Za-z0-9_]+)\]", clue)
+        roleToken = re.search(r"\{([A-Za-z0-9_]+)\}", clue)
+        if behaviorToken != None:
             if bot1.behavior == "Liar":
                 randBot = random.choice(bots)
                 clue = re.sub(r"\[([A-Za-z0-9_]+)\]", randBot.name, clue)
             else:
                 for bot2 in bots:
-                    if bot2.behavior == token.group(1):
+                    if bot2.behavior == behaviorToken.group(1):
                         clue = re.sub(r"\[([A-Za-z0-9_]+)\]", bot2.name, clue)
+                        break
+        if roleToken != None:
+            if bot1.behavior == "Liar":
+                randBot = random.choice(bots)
+                clue = re.sub(r"\[([A-Za-z0-9_]+)\]", randBot.name, clue)
+            else:
+                for bot2 in bots:
+                    if bot2.role == roleToken.group(1):
+                        clue = re.sub(r"\{([A-Za-z0-9_]+)\}", bot2.name, clue)
                         break
         bot1.clues.append(clue)
 
@@ -88,5 +105,6 @@ def update():
 
 def init():
     createMockBot()
+    randomizeRoles()
     randomizeBehaviors()
     randomizeClues()

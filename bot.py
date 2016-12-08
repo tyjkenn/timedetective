@@ -9,7 +9,20 @@ behaviors = [
     "Standoffish",
     "Liar",
     "Friendly",
-    "Hospitable",
+    "Hospitable"
+]
+
+roles = [
+    "Murderer",
+    "Accomplice",
+    "Townsperson1",
+    "Townsperson2",
+    "Townsperson3",
+    "Townsperson4",
+    "Townsperson5",
+    "Townsperson6",
+    "Townsperson7",
+    "Townsperson8"
 ]
 
 class ScheduleEvent(object):
