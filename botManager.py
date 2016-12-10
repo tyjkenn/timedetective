@@ -37,7 +37,9 @@ def randomizeClues():
         roleToken = re.search(r"\{([A-Za-z0-9_]+)\}", clue)
         if behaviorToken != None:
             if bot1.behavior == "Liar":
-                randBot = random.choice(bots)
+                randBot = None
+                while randBot == None or randBot.behavior == behaviorToken:
+                    randBot = random.choice(bots)
                 clue = re.sub(r"\[([A-Za-z0-9_]+)\]", randBot.name, clue)
             else:
                 for bot2 in bots:
@@ -46,8 +48,10 @@ def randomizeClues():
                         break
         if roleToken != None:
             if bot1.behavior == "Liar":
-                randBot = random.choice(bots)
-                clue = re.sub(r"\[([A-Za-z0-9_]+)\]", randBot.name, clue)
+                randBot = None
+                while randBot == None or randBot.role == roleToken:
+                    randBot = random.choice(bots)
+                clue = re.sub(r"\{([A-Za-z0-9_]+)\}", randBot.name, clue)
             else:
                 for bot2 in bots:
                     if bot2.role == roleToken.group(1):
