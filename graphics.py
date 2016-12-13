@@ -112,13 +112,13 @@ def endScreen():
         lines.append("2. Artist")
         lines.append("3. Chef")
         lines.append("4. Innkeeper")
-        lines.append("5. Huntress")
+        lines.append("5. Little Girl")
         lines.append("6. Old Man")
         lines.append("7. Scientist")
         lines.append("8. Gardener")
         lines.append("9. Merchant")
     elif weaponGuess == 0:
-        text = "What will the murder use?"
+        text = "What will the murderer use?"
         lines = textwrap.wrap(text, 35)
         lines.append("1. Magic")
         lines.append("2. Gun")

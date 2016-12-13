@@ -87,7 +87,7 @@ class Bot(Person):
                 if other is not self and (self.behavior == "Gossiper" or other.behavior == "Friendly"):
                     if other.location == self.location and self.location != 'outside':
                         for clue in self.clues:
-                            if clue not in other.gossip:
+                            if clue not in other.gossip and other.name not in clue:
                                 other.gossip.append(clue)
                                 print "Gossiping"
 

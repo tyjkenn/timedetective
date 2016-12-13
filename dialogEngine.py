@@ -23,14 +23,14 @@ def showDialog(theBot):
 	label = {}
 	currentText = theBot.name + ": " + dialog["greetings"][theBot.name] + " "
 	if theBot.behavior == "Standoffish":
-		currentText += "Go away"
+		currentText += "Go away."
 	else:
 		for clue in theBot.clues:
 			currentText += clue + " "
-	if len(theBot.gossip) > 0:
-		currentText += "Here are some things I've been hearing from others: "
-		for clue in theBot.gossip:
-			currentText += clue + " "
+		if len(theBot.gossip) > 0:
+			currentText += "Here are some things I've been hearing from others: "
+			for clue in theBot.gossip:
+				currentText += clue + " "
 	visible = True
 
 def update():
