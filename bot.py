@@ -22,14 +22,19 @@ roles = [
     "Townsperson2",
     "Townsperson3",
     "Townsperson4",
-    "Townsperson5",
-    "Townsperson6"
+    "Townsperson5"
 ]
 
 abilities = [
-    "Magic",
-    "Swordmanship",
-    "Shooting",
+    "Magic1",
+    "Sword1",
+    "Gun1",
+    "Magic2",
+    "Sword2",
+    "Gun2",
+    "Magic3",
+    "Sword3",
+    "Gun3",
 ]
 
 class ScheduleEvent(object):
@@ -44,7 +49,7 @@ class Bot(Person):
     def __init__(self, location, x, frame, name):
         self.sprite_sheet = graphics.load_image("img/characters.png")
         self.frame = frame
-        self.walkSpeed = 1
+        self.walkSpeed = 2
         self.scheduleEvents = []
         self.action = 0
         self.facingRight = False
@@ -55,6 +60,7 @@ class Bot(Person):
         self.x = x
         self.randomRoomPos = 0
         self.clues = []
+        self.gossip = []
         self.behavior = None
         self.name = name
         self.ability = None
@@ -77,11 +83,12 @@ class Bot(Person):
 
     def handleBehavior(self):
             for other in botManager.bots:
-                if self.behavior == "Gossiper" or other.behavior == "Friendly":
+                if other is not self and self.behavior == "Gossiper" or other.behavior == "Friendly":
                     if other.location == self.location and self.location != 'outside':
                         for clue in self.clues:
-                            if clue not in other.clues:
-                                other.clues.append(clue)
+                            if clue not in other.gossip:
+                                other.gossip.append(clue)
+                                print "Gossiping"
 
     def update(self):
         self.checkSchedule()

@@ -34,6 +34,7 @@ def randomizeClues():
         clue = clues.pop(random.randint(0,len(clues) - 1))
         behaviorToken = re.search(r"\[([A-Za-z0-9_]+)\]", clue)
         roleToken = re.search(r"\{([A-Za-z0-9_]+)\}", clue)
+        abilityToken = re.search(r"\<([A-Za-z0-9_]+)\>", clue)
         if behaviorToken != None:
             if bot1.behavior == "Liar":
                 randBot = None
@@ -56,6 +57,17 @@ def randomizeClues():
                     if bot2.role == roleToken.group(1):
                         clue = re.sub(r"\{([A-Za-z0-9_]+)\}", bot2.name, clue)
                         break
+        if abilityToken != None:
+            if bot1.behavior == "Liar":
+                randBot = None
+                while randBot == None or randBot.ability == abilityToken:
+                    randBot = random.choice(bots)
+                clue = re.sub(r"\<([A-Za-z0-9_]+)\>", randBot.name, clue)
+            else:
+                for bot2 in bots:
+                    if bot2.ability == abilityToken.group(1):
+                        clue = re.sub(r"\<([A-Za-z0-9_]+)\>", bot2.name, clue)
+                        break
         bot1.clues.append(clue)
 
 def randomizeBehaviors():
@@ -67,7 +79,7 @@ def randomizeBehaviors():
 
 def randomizeAbilities():
     global bots
-    abilities = bot.abilities[:] + bot.abilities[:] + bot.abilities
+    abilities = bot.abilities[:]
     for theBot in bots:
         if len(abilities) > 0:
             theBot.ability = abilities.pop(random.randint(0, len(abilities) - 1))
@@ -116,5 +128,6 @@ def update():
 def init():
     createMockBot()
     randomizeRoles()
+    randomizeAbilities()
     randomizeBehaviors()
     randomizeClues()

@@ -24,6 +24,14 @@
     "I don't know who you are looking for, but it is not {Townsperson3}",
     "I think it is safe to say that {Townsperson4} is innocent.",
     "{Townsperson5} is not guilty.",
-    "{Townsperson6} is innocent."
+    "<Magic1> know how to use magic.",
+    "<Gun1> has excellent aim.",
+    "<Sword1> is skilled with a sword.",
+    "I saw <Magic2> casting a spell.",
+    "I went shooting the other day with <Gun2>.",
+    "I wish <Sword2> would teach me some cool sword tricks.",
+    "I think <Magic3> is a wizard.",
+    "<Gun3> has a lot of guns.",
+    "Do not cross blades with <Sword3>."
   ]
 }

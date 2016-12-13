@@ -68,8 +68,11 @@ class Player(Person):
             for theBot in botManager.bots:
                 if theBot.location == map.activeRoomName and theBot.x < self.x + 16 and theBot.x > self.x - 16:
                     if dialogEngine.visible:
-                        dialogEngine.visible = False
+                        dialogEngine.page += 1
+                        #dialogEngine.visible = False
+
                     else:
+                        dialogEngine.page = 0
                         dialogEngine.showDialog(theBot)
                     return
             for roomName, doorX in map.activeRoom.doors.iteritems():
