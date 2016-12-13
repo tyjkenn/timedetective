@@ -52,7 +52,16 @@ def draw_map():
 
 def draw_ui():
     global _screen, _font, firstRun
-    label = _font.render(`botManager.hour` + ":" + `botManager.minute`, 1, (255,255,0))
+    fillMin = str(botManager.minute).zfill(2)
+    displayHour = botManager.hour % 12
+    if displayHour == 0:
+        displayHour = 12
+    time = `displayHour` + ":" + fillMin
+    if botManager.hour >= 12:
+        time += " PM"
+    else:
+        time += " AM"
+    label = _font.render(time, 1, (255,255,0))
     _screen.blit(label, (0, 0))
     if dialogEngine.visible:
         botManager.paused = True
@@ -135,7 +144,7 @@ def win():
         if bot.role == "Victim":
             victimName = bot.name
     text = murdererName + " sneaks in to attack " + victimName
-    text += ", only to find the authorities ready for him. They cuff the villian and take him to jail. The day is saved!"
+    text += ", only to find the authorities ready for him. They cuff the villian and head off to jail. The day is saved!"
     lines = textwrap.wrap(text, 35)
     for i in xrange(len(lines)):
         label = (_font.render(lines[i], 1, (255,255,255)))
