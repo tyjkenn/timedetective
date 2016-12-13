@@ -22,7 +22,7 @@ roles = [
     "Townsperson2",
     "Townsperson3",
     "Townsperson4",
-    "Townsperson5"
+    "Victim"
 ]
 
 abilities = [

@@ -16,6 +16,8 @@ _font = None
 _entities = []
 
 userInput = 0
+murdererGuess = 0
+weaponGuess = 0
 
 #Dialog Variables
 talking = False
@@ -73,33 +75,50 @@ def intro():
     pygame.display.flip();
 
 def endScreen():
-    global _screen, _font, userInput
+    global _screen, _font, userInput, murdererGuess, weaponGuess
     _screen.fill((0,0,0))
-    text = "Who do you think is the murderer?"
-    lines = textwrap.wrap(text, 35)
-    lines.append("1. Hobo")
-    lines.append("2. Artist")
-    lines.append("3. Chef")
-    lines.append("4. Innkeeper")
-    lines.append("5. Huntress")
-    lines.append("6. Old Man")
-    lines.append("7. Scientist")
-    lines.append("8. Gardener")
-    lines.append("9. Merchant")
+    if userInput != 0:
+        if murdererGuess == 0:
+            murdererGuess = userInput
+        elif weaponGuess == 0:
+            weaponGuess = userInput
+        userInput = 0
+
     i = 0
     for theBot in botManager.bots:
         i += 1
         if theBot.role == "Murderer":
             Correct = i
-            print Correct
-    if userInput == 0:
-        lines.append("Guess the murderer...")
-    elif userInput == Correct:
-        lines.append("Correct")
-        return "win"
-    elif userInput != Correct:
-        lines.append("Wrong...")
-        return "lose"
+            if "Magic" in theBot.ability:
+                correctWeapon = 1
+            elif "Gun" in theBot.ability:
+                correctWeapon = 2
+            elif "Sword" in theBot.ability:
+                correctWeapon = 3
+            print Correct, correctWeapon
+    if murdererGuess == 0:
+        text = "Who do you think is the murderer?"
+        lines = textwrap.wrap(text, 35)
+        lines.append("1. Hobo")
+        lines.append("2. Artist")
+        lines.append("3. Chef")
+        lines.append("4. Innkeeper")
+        lines.append("5. Huntress")
+        lines.append("6. Old Man")
+        lines.append("7. Scientist")
+        lines.append("8. Gardener")
+        lines.append("9. Merchant")
+    elif weaponGuess == 0:
+        text = "What will the murder use?"
+        lines = textwrap.wrap(text, 35)
+        lines.append("1. Magic")
+        lines.append("2. Gun")
+        lines.append("3. Sword")
+    else:
+        if murdererGuess == Correct and weaponGuess == correctWeapon:
+            return "win"
+        else:
+            return "lose"
     for i in xrange(len(lines)):
         label = (_font.render(lines[i], 1, (255,255,255)))
         _screen.blit(label, (30, 50 + (i*20)))
@@ -110,7 +129,13 @@ def endScreen():
 def win():
     global _screen, _font
     _screen.fill((0,0,0))
-    text = "The murderer snuck in to attack his victim, only to find the authorities ready for him. The cuff the villian and take him to jail. The day is saved!"
+    for bot in botManager.bots:
+        if bot.role == "Murderer":
+            murdererName = bot.name
+        if bot.role == "Victim":
+            victimName = bot.name
+    text = murdererName + " sneaks in to attack " + victimName
+    text += ", only to find the authorities ready for him. They cuff the villian and take him to jail. The day is saved!"
     lines = textwrap.wrap(text, 35)
     for i in xrange(len(lines)):
         label = (_font.render(lines[i], 1, (255,255,255)))
@@ -119,6 +144,8 @@ def win():
 
 def lose():
     global _screen, _font
+    murdererGuess = 0
+    weaponGuess = 0
     _screen.fill((0,0,0))
     text = "You hear screaming in the distance. Your rescue failed. Fortunately, this is just a game, and games can be reset. You travel back in time to the start of the day to try again."
     lines = textwrap.wrap(text, 35)
