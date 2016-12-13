@@ -93,7 +93,7 @@ def createMockBot():
 def tickClock():
     global hour, minute, frames
     frames += 1
-    if frames >= 20:
+    if frames >= 5:
         frames = 0
         minute += 1
     if minute >= 60:

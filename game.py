@@ -31,6 +31,8 @@ def update():
         if not dialogEngine.visible:
             botManager.update()
         graphics.update()
+        if botManager.hour >= 24:
+            gameState = "end"
     elif gameState == "end":
         gameState = graphics.endScreen()
         for event in events.event_queue:

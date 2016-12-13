@@ -9,14 +9,15 @@ behaviors = [
     "Standoffish",
     "Liar",
     "Friendly",
-    "Hospitable"
+    "Hospitable",
+    "Shy"
 ]
 
 roles = [
     "Murderer",
     "Accomplice",
-    "Townsperson1",
-    "Townsperson2",
+    "Idiot",
+    "Pacifist",
     "Townsperson3",
     "Townsperson4",
     "Townsperson5",
