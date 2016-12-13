@@ -67,6 +67,7 @@ def update():
                     botManager.reset()
                     thePlayer.reset()
                     map.activeRoomName = "outside"
+                    map.xOffset = 0
                     graphics.set_map(map.activeRoomName)
 
 run = True

@@ -165,7 +165,7 @@ def lose():
 
 def update():
     global _screen, _entities
-    _screen.fill((100,100,255))
+    _screen.fill((135 - (botManager.hour - 6) * 7,135 - (botManager.hour-6) * 7,240 - (botManager.hour-6) * 13))
     draw_map()
     for entity in _entities:
         if not hasattr(entity, 'visible') or entity.visible:
