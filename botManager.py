@@ -108,10 +108,22 @@ def createMockBot():
         graphics.register(theBot)
         randomizeSchedule(theBot)
 
+def reset():
+    global frames, hour, minute, bots
+    frames = 0
+    hour = 5
+    minute = 59
+    for bot in bots:
+        bot.location = bot.startLocation
+        bot.destination = None
+        bot.x = 200
+        for scheduleEvent in bot.scheduleEvents:
+            scheduleEvent.future = True
+
 def tickClock():
     global hour, minute, frames
     frames += 1
-    if frames >= 10:
+    if frames >= 1:
         frames = 0
         minute += 1
     if minute >= 60:

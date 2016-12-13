@@ -55,6 +55,7 @@ class Bot(Person):
         self.facingRight = False
         self.destination = None
         self.location = location
+        self.startLocation = location
         self.y = 10
         self.directions = 0
         self.x = x

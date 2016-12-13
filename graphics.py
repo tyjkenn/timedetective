@@ -99,7 +99,7 @@ def endScreen():
         return "win"
     elif userInput != Correct:
         lines.append("Wrong...")
-        return "start"
+        return "lose"
     for i in xrange(len(lines)):
         label = (_font.render(lines[i], 1, (255,255,255)))
         _screen.blit(label, (30, 50 + (i*20)))
@@ -114,7 +114,17 @@ def win():
     lines = textwrap.wrap(text, 35)
     for i in xrange(len(lines)):
         label = (_font.render(lines[i], 1, (255,255,255)))
-        _screen.blit(label, (150, 150 + (i*20)))
+        _screen.blit(label, (30, 100 + (i*20)))
+    pygame.display.flip();
+
+def lose():
+    global _screen, _font
+    _screen.fill((0,0,0))
+    text = "You hear screaming in the distance. Your rescue failed. Fortunately, this is just a game, and games can be reset. You travel back in time to the start of the day to try again."
+    lines = textwrap.wrap(text, 35)
+    for i in xrange(len(lines)):
+        label = (_font.render(lines[i], 1, (255,255,255)))
+        _screen.blit(label, (30, 100 + (i*20)))
     pygame.display.flip();
 
 def update():

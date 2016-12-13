@@ -2,13 +2,13 @@
   "greetings":{
     "Hobo":"Please spare some change.",
     "Artist":"Hi.",
-    "Chef":"Howdy!",
+    "Chef":"Bonjour!",
     "Innkeeper":"Welcome.",
     "Huntress":"Greetings.",
     "Old Man":"Hello, wippersnapper.",
     "Scientist":"Maybe if I...",
     "Gardener":"Lovely day we are having.",
-    "Merchant":"Saluton Mondo."
+    "Merchant":"Hello."
   },
   "clues": [
     "[Gossiper] is such a gossiper",

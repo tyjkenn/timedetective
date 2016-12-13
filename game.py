@@ -5,6 +5,7 @@ import pytmx
 import botManager
 import player
 import bot
+import map
 import dialogEngine
 
 pygame.init()
@@ -57,6 +58,16 @@ def update():
 
     elif gameState == "win":
         graphics.win()
+    elif gameState == "lose":
+        graphics.lose()
+        for e in events.event_queue:
+            if e.type == pygame.KEYDOWN:
+                if e.key == pygame.K_SPACE:
+                    gameState = "interact"
+                    botManager.reset()
+                    thePlayer.reset()
+                    map.activeRoomName = "outside"
+                    graphics.set_map(map.activeRoomName)
 
 run = True
 clock = pygame.time.Clock()

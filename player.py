@@ -30,6 +30,10 @@ class Player(Person):
         self.move()
         self.checkCollisions()
 
+    def reset(self):
+        self.directions = 0
+        self.x = 200
+
     def handleInput(self):
         self.takingAction = False
         for event in events.event_queue:
@@ -69,7 +73,6 @@ class Player(Person):
                 if theBot.location == map.activeRoomName and theBot.x < self.x + 16 and theBot.x > self.x - 16:
                     if dialogEngine.visible:
                         dialogEngine.page += 1
-                        #dialogEngine.visible = False
 
                     else:
                         dialogEngine.page = 0
