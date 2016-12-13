@@ -11,14 +11,14 @@ hour = 6
 minute = 0
 frames = 0
 paused = False
+fpgs = 10
 
 roomNames = ['shack','studio','inn','bakery','house']
 
 def randomizeSchedule(theBot):
-    for i in xrange(9):
-        hour = random.randrange(6, 12)
+    for i in xrange(5):
         room = roomNames[random.randrange(0,len(roomNames))]
-        theBot.addToSchedule(bot.ScheduleEvent(i*2 + 6, 0, room))
+        theBot.addToSchedule(bot.ScheduleEvent(i*3 + 6, 0, room))
 
 def randomizeRoles():
     global bots
@@ -30,45 +30,65 @@ def randomizeRoles():
 def randomizeClues():
     global bots
     clues = dialogEngine.dialog["clues"]
-    for bot1 in bots:
-        clue = clues.pop(random.randint(0,len(clues) - 1))
-        behaviorToken = re.search(r"\[([A-Za-z0-9_]+)\]", clue)
-        roleToken = re.search(r"\{([A-Za-z0-9_]+)\}", clue)
-        abilityToken = re.search(r"\<([A-Za-z0-9_]+)\>", clue)
-        if behaviorToken != None:
-            if bot1.behavior == "Liar":
-                randBot = None
-                while randBot == None or randBot.behavior == behaviorToken:
-                    randBot = random.choice(bots)
-                clue = re.sub(r"\[([A-Za-z0-9_]+)\]", randBot.name, clue)
-            else:
-                for bot2 in bots:
-                    if bot2.behavior == behaviorToken.group(1):
-                        clue = re.sub(r"\[([A-Za-z0-9_]+)\]", bot2.name, clue)
-                        break
-        if roleToken != None:
-            if bot1.behavior == "Liar":
-                randBot = None
-                while randBot == None or randBot.role == roleToken:
-                    randBot = random.choice(bots)
-                clue = re.sub(r"\{([A-Za-z0-9_]+)\}", randBot.name, clue)
-            else:
-                for bot2 in bots:
-                    if bot2.role == roleToken.group(1):
-                        clue = re.sub(r"\{([A-Za-z0-9_]+)\}", bot2.name, clue)
-                        break
-        if abilityToken != None:
-            if bot1.behavior == "Liar":
-                randBot = None
-                while randBot == None or randBot.ability == abilityToken:
-                    randBot = random.choice(bots)
-                clue = re.sub(r"\<([A-Za-z0-9_]+)\>", randBot.name, clue)
-            else:
-                for bot2 in bots:
-                    if bot2.ability == abilityToken.group(1):
-                        clue = re.sub(r"\<([A-Za-z0-9_]+)\>", bot2.name, clue)
-                        break
-        bot1.clues.append(clue)
+    while len(clues) > 0:
+        for bot1 in bots:
+            if len(clues) == 0:
+                break
+            error = False
+            clue = clues.pop(random.randint(0,len(clues) - 1))
+            behaviorToken = re.search(r"\[([A-Za-z0-9_]+)\]", clue)
+            roleToken = re.search(r"\{([A-Za-z0-9_]+)\}", clue)
+            abilityToken = re.search(r"\<([A-Za-z0-9_]+)\>", clue)
+            if behaviorToken != None:
+                if bot1.behavior == "Liar":
+                    randBot = None
+                    while randBot == None or randBot.behavior == behaviorToken:
+                        randBot = random.choice(bots)
+                    clue = re.sub(r"\[([A-Za-z0-9_]+)\]", randBot.name, clue)
+                else:
+                    for bot2 in bots:
+                        if bot2.behavior == behaviorToken.group(1):
+                            if bot2 == bot1:
+                                #can't talk about themselves. Put back
+                                clues.append(clue)
+                                error = True
+                                break
+                            clue = re.sub(r"\[([A-Za-z0-9_]+)\]", bot2.name, clue)
+                            break
+            if roleToken != None:
+                if bot1.behavior == "Liar":
+                    randBot = None
+                    while randBot == None or randBot.role == roleToken:
+                        randBot = random.choice(bots)
+                    clue = re.sub(r"\{([A-Za-z0-9_]+)\}", randBot.name, clue)
+                else:
+                    for bot2 in bots:
+                        if bot2.role == roleToken.group(1):
+                            if bot2 == bot1:
+                                #can't talk about themselves. Put back
+                                clues.append(clue)
+                                error = True
+                                break
+                            clue = re.sub(r"\{([A-Za-z0-9_]+)\}", bot2.name, clue)
+                            break
+            if abilityToken != None:
+                if bot1.behavior == "Liar":
+                    randBot = None
+                    while randBot == None or randBot.ability == abilityToken:
+                        randBot = random.choice(bots)
+                    clue = re.sub(r"\<([A-Za-z0-9_]+)\>", randBot.name, clue)
+                else:
+                    for bot2 in bots:
+                        if bot2.ability == abilityToken.group(1):
+                            if bot2 == bot1:
+                                #can't talk about themselves. Put back
+                                clues.append(clue)
+                                error = True
+                                break
+                            clue = re.sub(r"\<([A-Za-z0-9_]+)\>", bot2.name, clue)
+                            break
+            if not error:
+                bot1.clues.append(clue)
 
 def randomizeBehaviors():
     global bots
@@ -123,7 +143,7 @@ def reset():
 def tickClock():
     global hour, minute, frames
     frames += 1
-    if frames >= 1:
+    if frames >= fpgs:
         frames = 0
         minute += 1
     if minute >= 60:

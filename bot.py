@@ -49,7 +49,7 @@ class Bot(Person):
     def __init__(self, location, x, frame, name):
         self.sprite_sheet = graphics.load_image("img/characters.png")
         self.frame = frame
-        self.walkSpeed = 2
+        self.walkSpeed = 1
         self.scheduleEvents = []
         self.action = 0
         self.facingRight = False
@@ -84,7 +84,7 @@ class Bot(Person):
 
     def handleBehavior(self):
             for other in botManager.bots:
-                if other is not self and self.behavior == "Gossiper" or other.behavior == "Friendly":
+                if other is not self and (self.behavior == "Gossiper" or other.behavior == "Friendly"):
                     if other.location == self.location and self.location != 'outside':
                         for clue in self.clues:
                             if clue not in other.gossip:
@@ -111,6 +111,7 @@ class Bot(Person):
                             self.x = graphics._mapRenderer.rooms[self.location].doors[oldRoomName] * 16
                             self.randomRoomPos = random.randrange(-100,100)
             else:
+                self.facingRight = True
                 midPoint = graphics._mapRenderer.rooms[self.location].data.width * 16 / 2
                 if self.x < midPoint + self.randomRoomPos:
                     self.x += self.walkSpeed

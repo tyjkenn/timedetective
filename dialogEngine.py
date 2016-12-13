@@ -37,7 +37,7 @@ def update():
 	global y, dialog, fontHeight, nextRow, label, currentText, page, visible
 	if visible:
 		lines = textwrap.wrap(currentText, 37)
-		if page > len(lines) / 5:
+		if page > (len(lines) - 1) / 5:
 			visible = False
 			return
 		if len(lines) > page * 5 + 5:

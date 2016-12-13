@@ -67,7 +67,7 @@ def draw_ui():
 def intro():
     global _screen, _font
     _screen.fill((0,0,0))
-    text = "You intercept a note hinting of a planned murder. You journey to a small town to investigate..."
+    text = "You intercept a note hinting of a planned murder. If you know who is planning this and what that person might try, you may be able to stop it. You journey to a small town to investigate..."
     lines = textwrap.wrap(text, 35)
     for i in xrange(len(lines)):
         label = (_font.render(lines[i], 1, (255,255,255)))
