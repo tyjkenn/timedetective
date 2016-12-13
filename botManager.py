@@ -15,11 +15,10 @@ paused = False
 roomNames = ['shack','studio','inn','bakery','house']
 
 def randomizeSchedule(theBot):
-    for i in xrange(40):
-        minute = random.randrange(0, 60)
+    for i in xrange(9):
         hour = random.randrange(6, 12)
         room = roomNames[random.randrange(0,len(roomNames))]
-        theBot.addToSchedule(bot.ScheduleEvent(hour, minute, room))
+        theBot.addToSchedule(bot.ScheduleEvent(i*2 + 6, 0, room))
 
 def randomizeRoles():
     global bots
@@ -66,6 +65,13 @@ def randomizeBehaviors():
         if len(behaviors) > 0:
             theBot.behavior = behaviors.pop(random.randint(0, len(behaviors) - 1))
 
+def randomizeAbilities():
+    global bots
+    abilities = bot.abilities[:] + bot.abilities[:] + bot.abilities
+    for theBot in bots:
+        if len(abilities) > 0:
+            theBot.ability = abilities.pop(random.randint(0, len(abilities) - 1))
+
 def createMockBot():
     global bots
     hobo = bot.Bot('shack', 200, 1, "Hobo")
@@ -74,7 +80,7 @@ def createMockBot():
     innkeeper = bot.Bot('inn', 200, 4, "Innkeeper")
     huntress = bot.Bot('house', 200, 7, "Huntress")
     oldMan = bot.Bot('house2', 200, 0, "Old Man")
-    scientist = bot.Bot('lab', 200, 3, "Scientist")
+    scientist = bot.Bot('lab', 200, 5, "Scientist")
     gardener = bot.Bot('garden', 200, 6, "Gardener")
     merchant = bot.Bot('house3', 200, 8, "Merchant")
     bots.append(hobo)
@@ -93,7 +99,7 @@ def createMockBot():
 def tickClock():
     global hour, minute, frames
     frames += 1
-    if frames >= 5:
+    if frames >= 10:
         frames = 0
         minute += 1
     if minute >= 60:

@@ -110,7 +110,7 @@ def endScreen():
 def win():
     global _screen, _font
     _screen.fill((0,0,0))
-    text = "You win!"
+    text = "The murderer snuck in to attack his victim, only to find the authorities ready for him. The cuff the villian and take him to jail. The day is saved!"
     lines = textwrap.wrap(text, 35)
     for i in xrange(len(lines)):
         label = (_font.render(lines[i], 1, (255,255,255)))

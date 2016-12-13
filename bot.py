@@ -18,12 +18,18 @@ roles = [
     "Accomplice",
     "Idiot",
     "Pacifist",
+    "Townsperson1",
+    "Townsperson2",
     "Townsperson3",
     "Townsperson4",
     "Townsperson5",
-    "Townsperson6",
-    "Townsperson7",
-    "Townsperson8"
+    "Townsperson6"
+]
+
+abilities = [
+    "Magic",
+    "Swordmanship",
+    "Shooting",
 ]
 
 class ScheduleEvent(object):
@@ -51,6 +57,7 @@ class Bot(Person):
         self.clues = []
         self.behavior = None
         self.name = name
+        self.ability = None
 
     def addToSchedule(self,scheduleEvent):
         self.scheduleEvents.append(scheduleEvent);
@@ -60,9 +67,9 @@ class Bot(Person):
             if event.future and botManager.hour >= event.hour and botManager.minute >= event.minute:
                 event.future = False
                 if self.location != 'outside':
-                    if self.location == map.activeRoomName:
-                        return
                     if self.behavior == "Hospitable":
+                        if self.location == map.activeRoomName:
+                            return
                         for other in botManager.bots:
                             if other != self and other.location == self.location:
                                 return

@@ -17,20 +17,13 @@
     "[Hospitable] is too nice. Won't leave until you leave.",
     "[Standoffish] only trusts a few friends.",
     "[Shy] leaves after every conversation.",
-    "{Murderer} is a despicable person",
-    "{Accomplice} has been acting suspicious",
-    "{Murderer} is a despicable person",
-    "{Accomplice} has been acting suspicious",
-    "{Murderer} is a despicable person",
-    "{Accomplice} has been acting suspicious",
     "{Idiot} isn't smart enough to plan a murder.",
     "{Pacifist} is a pacifist. Wouldn't hurt a fly.",
-    "{Murderer} is a despicable person",
-    "{Murderer} is a despicable person",
-    "{Murderer} is a despicable person",
-    "{Murderer} is a despicable person",
-    "{Murderer} is a despicable person",
-    "{Murderer} is a despicable person",
-    "{Murderer} is a despicable person"
+    "I know {Townsperson1} is not a killer.",
+    "Trust me, {Townsperson2} is innocent.",
+    "I don't know who you are looking for, but it is not {Townsperson3}",
+    "I think it is safe to say that {Townsperson4} is innocent.",
+    "{Townsperson5} is not guilty.",
+    "{Townsperson6} is innocent."
   ]
 }
